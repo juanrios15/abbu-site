@@ -1,0 +1,40 @@
+# ─── ENTORNOS VIRTUALES ──────────────────────────────
+.env
+.venv/
+venv/
+ENV/
+env.bak/
+*.env
+
+# ─── ARCHIVOS DE CONFIGURACIÓN SENSIBLE ──────────────
+*.sqlite3
+db.sqlite3
+*.py[cod]
+__pycache__/
+*.log
+*.pot
+*.pyc
+secrets.json
+
+# ─── ARCHIVOS DE USUARIO / MEDIA (NO van en Git) ─────
+media/
+uploads/
+*.bak
+
+# ─── STATICFILES (generados por collectstatic) ───────
+staticfiles/
+
+# ─── ARCHIVOS DE SISTEMA / EDITOR ────────────────────
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# ─── MIGRACIONES TEMPORALES (opcional) ───────────────
+# El siguiente bloque es opcional si quieres un repo más limpio
+# **/__pycache__/
+# **/migrations/*.pyc
+# **/migrations/__pycache__/
+# !**/migrations/__init__.py

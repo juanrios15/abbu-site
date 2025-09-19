@@ -1,0 +1,39 @@
+{% extends "sitecontent/base.html" %}
+
+{% block title %}{{ page.title }}Projets - abbu{% endblock %}
+
+{% block content %}
+<div class="py-4 md:pt-14 md:pb-8 md:px-12 lg:px-24 text-gray-500">
+  {% for project in projects %}
+  <div class="grid grid-cols-1 md:grid-cols-3 py-3 md:py-6 border-b">
+    <div class="pb-3 md:pb-0md:pe-3">
+      <div class="font-semibold text-lg pb-3">
+        <a href="{% url 'projects:detail' project.slug %}" class="hover:underline">
+          {{ project.title }}
+        </a>
+      </div>
+      <div class="pb-3">{{ project.summary }}</div>
+      <a href="{% url 'projects:detail' project.slug %}" class="hover:underline italic">
+        voir le projet en détail
+      </a>
+    </div>
+    <div class="md:col-span-2">
+      {% with project.images.all.0 as first_image %}
+      {% if first_image %}
+      <a href="{% url 'projects:detail' project.slug %}">
+        <img src="{{ first_image.image.url }}" alt="{{ project.title }}" class="w-full h-64 md:h-96 object-cover rounded">
+      </a>
+      {% else %}
+      <a href="{% url 'projects:detail' project.slug %}">
+        <div class="w-full h-64 md:h-96 bg-gray-100 rounded"></div>
+      </a>
+      {% endif %}
+      {% endwith %}
+    </div>
+  </div>
+
+  {% empty %}
+  <p>No projects found.</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,148 @@
+{% extends "sitecontent/base.html" %}
+
+{% block title %}{{ project.title }} - abbu{% endblock %}
+
+{% block content %}
+<div class="py-4 md:pt-14 md:pb-8 md:px-12 lg:px-24 text-gray-500">
+  <div class="grid grid-cols-1 md:grid-cols-3 pb-3 md:pb-6 border-b">
+    <div class="pb-3 md:pb-0md:pe-3">
+      <div class="font-semibold text-lg pb-3">
+        {{ project.title }}
+      </div>
+      <div class="pb-3">{{ project.summary }}</div>
+      <a href="{% url 'projects:list' %}" class="hover:underline italic">
+        voir les autres projets
+      </a>
+    </div>
+    <div class="md:col-span-2">
+      {% if project.images.all %}
+      <div id="homepage-carousel" class="relative w-full" data-carousel="slide" data-carousel-interval="5000">
+
+        <!-- Wrapper de diapositivas -->
+        <div class="relative h-64 md:h-96 overflow-hidden rounded-lg">
+          {% for img in project.images.all %}
+          <div class="{% if not forloop.first %}hidden{% endif %} duration-700 ease-in-out" data-carousel-item{% if forloop.first %}="active" {% endif %}>
+            <img src="{{ img.image.url }}" alt="Slide {{ forloop.counter }}" loading="lazy"
+              class="block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full object-cover select-none" />
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Indicadores -->
+        <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3">
+          {% for _ in project.images.all %}
+          <button type="button" class="w-3 h-3 rounded-full" aria-label="Slide {{ forloop.counter }}"
+            data-carousel-slide-to="{{ forloop.counter0 }}"></button>
+          {% endfor %}
+        </div>
+
+        <!-- Controles -->
+        <button type="button"
+          class="group absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 focus:outline-none"
+          data-carousel-prev>
+          <span
+            class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/50 group-hover:bg-white/70">
+            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5 1 1 5l4 4" />
+            </svg>
+            <span class="sr-only">Previous</span>
+          </span>
+        </button>
+
+        <button type="button"
+          class="group absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 focus:outline-none"
+          data-carousel-next>
+          <span
+            class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/50 group-hover:bg-white/70">
+            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 9 4-4-4-4" />
+            </svg>
+            <span class="sr-only">Next</span>
+          </span>
+        </button>
+      </div>
+      {% else %}
+      <a href="{% url 'projects:detail' project.slug %}">
+        <div class="w-full h-64 md:h-96 bg-gray-100 rounded"></div>
+      </a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="flex space-x-3 justify-center pt-3 md:pt-6 pb-3 text-lg">
+    <ul id="project-tabs" class="flex justify-center space-x-6 text-lg" data-tabs-toggle="#project-tabs-content"
+      data-tabs-active-classes="font-bold" data-tabs-inactive-classes="font-normal">
+      <li>
+        <button id="tab-galerie" type="button" class="px-1" role="tab" aria-controls="panel-galerie"
+          aria-selected="true" data-tabs-target="#panel-galerie">Galerie</button>
+      </li>
+      <li>
+        <button id="tab-mandat" type="button" class="px-1" role="tab" aria-controls="panel-mandat"
+          data-tabs-target="#panel-mandat">Mandat</button>
+      </li>
+      <li>
+        <button id="tab-avant" type="button" class="px-1" role="tab" aria-controls="panel-avant"
+          data-tabs-target="#panel-avant">Avant</button>
+      </li>
+    </ul>
+  </div>
+  <div id="project-tabs-content" class="mt-4">
+    <div id="panel-galerie" role="tabpanel" aria-labelledby="tab-galerie">
+      {% if project.images.all %}
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+        {% for img in project.images.all %}
+        <button type="button" data-modal-target="imageModal" data-modal-toggle="imageModal"
+          onclick="setModalImage('{{ img.image.url }}')">
+          <img src="{{ img.image.url }}" alt="{{ img.caption|default:project.title }}" loading="lazy"
+            class="w-full h-40 object-cover rounded" />
+        </button>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div>Pas d’images pour ce projet.</div>
+      {% endif %}
+    </div>
+
+    <div id="panel-mandat" class="hidden" role="tabpanel" aria-labelledby="tab-mandat">
+      <div>{{ project.content|safe }}</div>
+    </div>
+    <div id="panel-avant" class="hidden" role="tabpanel" aria-labelledby="tab-avant">
+      {% if project.before_images.all %}
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+        {% for img in project.images.all %}
+        <button type="button" data-modal-target="imageModal" data-modal-toggle="imageModal"
+          onclick="setModalImage('{{ img.image.url }}')">
+          <img src="{{ img.image.url }}" alt="{{ img.caption|default:project.title }}" loading="lazy"
+            class="w-full h-40 object-cover rounded" />
+        </button>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div>Pas d’images pour ce projet.</div>
+      {% endif %}
+    </div>
+  </div>
+  <div>
+  </div>
+  <!-- Modal Image -->
+  <div id="imageModal" tabindex="-1" aria-hidden="true"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+    <div class="bg-white p-4 rounded-lg">
+      <div class="flex justify-end pb-2">
+        <button type="button" class="text-gray-500 hover:text-gray-700 text-3xl text-end" data-modal-hide="imageModal">
+          <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+          </svg>
+        </button>
+      </div>
+      <img id="modalImage" src="" alt="modal image" class="w-full h-[80vh] object-contain rounded">
+    </div>
+  </div>
+  <script>
+    function setModalImage(url) {
+      document.getElementById('modalImage').src = url;
+    }
+  </script>
+  {% endblock %}

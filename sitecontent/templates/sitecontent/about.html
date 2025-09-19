@@ -1,0 +1,19 @@
+{% extends "sitecontent/base.html" %}
+
+{% block title %}{{ page.title }}Bureau - abbu{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-3 py-4 md:pt-14 md:pb-8 md:px-12 lg:px-24">
+  <div class="col-span-2 pe-2 flex items-center text-gray-500 flex flex-col">
+    {{ page.body|safe }}
+  </div>
+  <div class="mt-4 md:mt-0 px-16">
+    {% if page.image %}
+    <img src="{{ page.image.url }}" alt="{{ page.title }}"
+      class="w-full h-auto rounded-lg shadow-md object-cover" />
+    {% else %}
+    <div class="text-gray-400 italic">Pas d’image disponible</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Abbu Site{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+  {% block head %}{% endblock %}
+</head>
+
+<body class="px-4 md:px-36 lg:px-60 min-h-screen flex flex-col">
+  <header>
+    <div class="relative p-4 flex items-center justify-center md:pt-8 md:pb-8">
+      <!-- Burger button: positioned to the left on mobile -->
+      <button data-collapse-toggle="navbar-default" type="button"
+        class="absolute left-4 inline-flex items-center p-2 w-10 h-10 justify-center rounded-lg md:hidden"
+        aria-controls="navbar-default" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M1 1h15M1 7h15M1 13h15" />
+        </svg>
+      </button>
+      <div class="flex justify-center w-full border-b border-gray-300 pb-3 md:border-none md:pb-0">
+        <img src="{% static 'sitecontent/abbu.png' %}" alt="Abbu Logo" class="w-[70%] md:w-auto">
+      </div>
+    </div>
+  </header>
+  <nav id="navbar-default" class="hidden w-full md:flex md:justify-center">
+    <ul class="flex flex-col items-center gap-3 md:flex-row md:gap-8 text-xl font-semibold text-gray-500">
+      <li><a href="{% url 'pages:home' %}"
+          class="{% if request.resolver_match.url_name == 'home' %}font-bold{% endif %}">
+          Accueil
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'projects:list' %}"
+          class="{% if request.resolver_match.url_name == 'list' %}font-bold{% endif %}">
+          Projets
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'pages:services' %}"
+          class="{% if request.resolver_match.url_name == 'services' %}font-bold{% endif %}">
+          Prestations
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'pages:about' %}"
+          class="{% if request.resolver_match.url_name == 'about' %}font-bold{% endif %}">
+          Bureau
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'pages:contact' %}"
+          class="{% if request.resolver_match.url_name == 'contact' %}font-bold{% endif %}">
+          Contact
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <main class="flex-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="py-6 border-t mt-8">
+    <p class="text-center text-sm text-gray-600 leading-relaxed">
+      &copy; {{ now|date:"Y" }} a&nbsp;&nbsp;&nbsp;b bu
+      <span class="mx-3">I</span>
+      rue centrale 10 1003 lausanne
+      <span class="mx-3">I</span>
+      <a href="tel:+41788084319" class="hover:underline">tél: 078 808 43 19</a>
+      <span class="mx-3">I</span>
+      <a href="mailto:info@abbu.ch" class="hover:underline">info@abbu.ch</a>
+    </p>
+  </footer>
+
+  <script src="{% static 'js/app.js' %}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+
+</html>
