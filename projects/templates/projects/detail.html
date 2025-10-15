@@ -110,7 +110,7 @@
     <div id="panel-avant" class="hidden" role="tabpanel" aria-labelledby="tab-avant">
       {% if project.before_images.all %}
       <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
-        {% for img in project.images.all %}
+        {% for img in project.before_images.all %}
         <button type="button" data-modal-target="imageModal" data-modal-toggle="imageModal"
           onclick="setModalImage('{{ img.image.url }}')">
           <img src="{{ img.image.url }}" alt="{{ img.caption|default:project.title }}" loading="lazy"
