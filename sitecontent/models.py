@@ -9,8 +9,8 @@ class HomePage(SingletonModel):
     body = RichTextField(blank=True)
 
     class Meta:
-        verbose_name = "Homepage (Accueil)"
-        verbose_name_plural = "Homepage (Accueil)"
+        verbose_name = "Accueil"
+        verbose_name_plural = "Accueil"
 
     def __str__(self):
         return "Homepage (Accueil)"
@@ -58,3 +58,19 @@ class AboutPage(SingletonModel):
 
     def __str__(self):
         return "About (Bureau)"
+
+
+class Quote(models.Model):
+    text = models.TextField()
+    author = models.CharField(max_length=200, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+        verbose_name = "Citation"
+        verbose_name_plural = "Citations"
+
+    def __str__(self):
+        preview = self.text[:60] + "…" if len(self.text) > 60 else self.text
+        return f'"{preview}" \u2014 {self.author}' if self.author else f'"{preview}"'

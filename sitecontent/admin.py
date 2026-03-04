@@ -2,7 +2,7 @@ from django.contrib import admin
 from solo.admin import SingletonModelAdmin
 from django.utils.html import format_html
 
-from .models import HomePage, HomePageImage, ServicesPage, AboutPage
+from .models import HomePage, HomePageImage, ServicesPage, AboutPage, Quote
 
 
 class HomePageImageInline(admin.TabularInline):
@@ -21,8 +21,8 @@ class HomePageImageInline(admin.TabularInline):
 class HomePageAdmin(SingletonModelAdmin):
     inlines = [HomePageImageInline]
     fieldsets = (
-        ("Header", {"fields": ("title", "subtitle")}),
-        ("Main content", {"fields": ("body",)}),
+        ("En-tête", {"fields": ("title", "subtitle")}),
+        ("Contenu principal", {"fields": ("body",)}),
     )
     list_display = ("__str__",)
     search_fields = ("title", "subtitle")
@@ -40,6 +40,21 @@ class ServicesPageAdmin(SingletonModelAdmin):
 
 @admin.register(AboutPage)
 class AboutPageAdmin(SingletonModelAdmin):
-    fieldsets = (("About the studio", {"fields": ("title", "body", "image")}),)
+    fieldsets = (("À propos", {"fields": ("title", "body", "image")}),)
     list_display = ("__str__",)
     search_fields = ("title",)
+
+
+@admin.register(Quote)
+class QuoteAdmin(admin.ModelAdmin):
+    list_display = ("short_text", "author", "created_at")
+    search_fields = ("text", "author")
+    readonly_fields = ("created_at", "updated_at")
+    fieldsets = (
+        (None, {"fields": ("text", "author")}),
+        ("Horodatage", {"fields": ("created_at", "updated_at"), "classes": ("collapse",)}),
+    )
+
+    @admin.display(description="Texte")
+    def short_text(self, obj):
+        return obj.text[:80] + "\u2026" if len(obj.text) > 80 else obj.text

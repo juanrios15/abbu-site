@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from .models import HomePage, ServicesPage, AboutPage
+from .models import HomePage, ServicesPage, AboutPage, Quote
 
 
 def home(request):
     page = HomePage.get_solo()
-    return render(request, "sitecontent/home.html", {"page": page})
+    quote = Quote.objects.order_by("?").first()
+    return render(request, "sitecontent/home.html", {"page": page, "quote": quote})
 
 
 def services(request):

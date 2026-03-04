@@ -3,11 +3,19 @@
 {% block title %}{{ page.title }}Abbu Site{% endblock %}
 
 {% block content %}
-<div class="grid grid-cols-1 md:grid-cols-3 py-4 md:pt-14 md:pb-8 md:px-12 lg:px-24">
-  <div class="col-span-1 pe-2 flex items-center text-xl text-gray-500 mb-6 md:mb-0">
+<div class="grid grid-cols-1 md:grid-cols-3 py-2 md:pt-8 md:pb-8 md:px-12 lg:px-20">
+  <div class="md:col-span-3">
+    {% if quote %}
+    <div class="text-center text-gray-400 mb-4">
+      <p class="italic">"{{ quote.text }}"</p>
+      {% if quote.author %}<p class="mt-1 text-sm">— {{ quote.author }}</p>{% endif %}
+    </div>
+    {% endif %}
+  </div>
+  <div class="col-span-1 md:pe-3 flex items-center text-lg text-gray-500 mb-6 md:mb-0">
     {{ page.body|safe }}
   </div>
-  <div class="col-span-2">
+  <div class="col-span-1 md:col-span-2">
     {% if page.images.all %}
     <div id="homepage-carousel" class="relative w-full" data-carousel="slide" data-carousel-interval="5000">
 
