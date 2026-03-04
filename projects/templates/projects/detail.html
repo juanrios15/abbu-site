@@ -81,10 +81,12 @@
         <button id="tab-mandat" type="button" class="px-1" role="tab" aria-controls="panel-mandat"
           data-tabs-target="#panel-mandat">Mandat</button>
       </li>
+      {% if project.before_images.all %}
       <li>
         <button id="tab-avant" type="button" class="px-1" role="tab" aria-controls="panel-avant"
           data-tabs-target="#panel-avant">Avant</button>
       </li>
+      {% endif %}
     </ul>
   </div>
   <div id="project-tabs-content" class="mt-4">

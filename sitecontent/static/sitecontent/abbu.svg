@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="220 110 650 230">
+
+<style>
+.main {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 160px;
+  fill: #d85a2a;
+  font-weight: 500;
+}
+
+.subtitle {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 42px;
+  fill: #555555;
+}
+</style>
+
+<!-- Main text -->
+<text x="220" y="220" class="main">
+a<tspan dx="80">b</tspan><tspan dx="40">bu</tspan>
+</text>
+
+<!-- Orange line -->
+<rect x="220" y="270" width="8" height="60" fill="#d85a2a"/>
+
+<!-- Subtitle -->
+<text x="260" y="315" class="subtitle">
+architecture d’intérieur et design
+</text>
+
+</svg>
